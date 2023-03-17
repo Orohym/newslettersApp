@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "newsletter-app"
+version = "0.1.0"
+description = ""
+authors = ["Orohym <63513640+Orohym@users.noreply.github.com>"]
+readme = "README.md"
+packages = [{include = "newsletter_app"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
