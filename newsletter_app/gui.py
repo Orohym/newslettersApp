@@ -8,10 +8,14 @@ from send_newsletter import Newsletter
 def temporary_text(textbox):
     textbox.delete(0,"end")
 
-#class text_box(tk.Entry):
+class EntryDefaultText(tk.Entry):
+    def __init__(self, default_text, textvariable=None):
+        super().__init__(self, textvariable=textvariable)
+        self.default_text = default_text
+        self.insert(0, self.default_text)
 
-
-
+    def delete_text_when_focus(self):
+        self.bind("<FocusIn>", self.delete(0,"end"))
 
 class DemoWidget(tk.Frame):
 
@@ -39,11 +43,14 @@ class DemoWidget(tk.Frame):
         username_label = tk.Label(self, text="Username")
         username_label.grid(column=0, row=0)
 
-        self.champs['username'].set("Default Text")
+        # self.champs['username'].set("Default Text")
+        #username_text = EntryDefaultText("Default", textvariable=self.champs['username'])
+        #username_text.grid(column=1, row=0, columnspan=2)
+        #username_text.delete_text_when_focus()
         username_text = tk.Entry(self, textvariable=self.champs['username'])
         username_text.grid(column=1, row=0, columnspan=2)
-        #username_text.insert(0, "This is Temporary Text...")
-        username_text.bind("<FocusIn>", self.champs['username'].set(""))
+        # #username_text.insert(0, "This is Temporary Text...")
+        # username_text.bind("<FocusIn>", self.delete())
 
         password_label = tk.Label(self, text="Password")
         password_label.grid(column=0, row=1)
@@ -87,6 +94,7 @@ class DemoWidget(tk.Frame):
         newsletter.add_receiver(self.champs["recipient"].get())
         newsletter.set_subject(self.champs["subject"].get())
         newsletter.set_images(self.filename)
+        newsletter.find_smtp_server()
         newsletter.send_email()
 
 
