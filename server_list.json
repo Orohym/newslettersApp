@@ -4,10 +4,10 @@
         "googlemail.com"
     ],
     "laposte.net": [
-        "stmp.laposte.net"
+        "smtp.laposte.net"
     ],
     "ac-lyon.fr": [
-        "stmps.ac-lyon.fr",
+        "smtps.ac-lyon.fr",
         587
     ]
 }
