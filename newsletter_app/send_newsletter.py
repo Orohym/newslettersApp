@@ -86,7 +86,8 @@ class Newsletter():
         self.msg = EmailMessage()
         self.msg['Subject'] = self.subject
         self.msg['From'] = self.smtp_email_adress
-        self.msg['To'] = self.receivers
+        self.msg['To'] = tuple(self.receivers)
+        print(self.msg['To'])
         figure_id = []
         for number_of_image in range(len(self.images)):
             figure_id_k = 'image'+str(number_of_image+1)
@@ -107,7 +108,7 @@ class Newsletter():
       with smtplib.SMTP(self.smtp_server, self.smtp_port) as server:
           server.starttls()
           server.login(self.smtp_username, self.smtp_password)
-          server.sendmail(self.smtp_email_adress, self.msg['To'], self.msg.as_string())
+          server.send_message(self.msg)
           logging.info("Email sent")
 
 
