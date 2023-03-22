@@ -2,11 +2,7 @@ import os
 import smtplib
 import json
 from email.message import EmailMessage
-from email.utils import make_msgid
-import imghdr
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-from email.mime.image import MIMEImage
+from email.headerregistry import Address
 import logging
 
 logging.basicConfig(level=logging.INFO, 
@@ -68,7 +64,13 @@ class Newsletter():
 
         
     def add_receiver(self, receivers):
-        self.receivers = receivers
+        list_receivers = receivers.split(',')
+        adress_receivers = []
+        for receiver in list_receivers:
+            username_receiver, domain_receiver = receiver.split('@')
+            adress_receivers.append(Address(display_name=username_receiver.strip(), username=username_receiver.strip(), domain=domain_receiver.strip()))
+        self.receivers = adress_receivers
+        print(self.receivers)
 
     def set_subject(self, subject):
         self.subject = subject
@@ -85,7 +87,6 @@ class Newsletter():
         self.msg['Subject'] = self.subject
         self.msg['From'] = self.smtp_email_adress
         self.msg['To'] = self.receivers
-        #self.html_code
         figure_id = []
         for number_of_image in range(len(self.images)):
             figure_id_k = 'image'+str(number_of_image+1)

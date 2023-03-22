@@ -79,18 +79,19 @@ class DemoWidget(tk.Frame):
 
 
         upload_button = tk.Button(self, text='Upload File',  width=20,command = lambda: self.upload_file())
-        upload_button.grid(column=2, row=5)
+        upload_button.grid(column=1, row=5,columnspan=2)
 
 
-        button = tk.Button(self, text="Valider", command=self.valider)
-        button.grid(column=1, row=6)
+        button = tk.Button(self, text="Send", command=self.valider)
+        button.grid(column=1, row=7, pady=20)
 
-        button = tk.Button(self, text="Fermer", command=app.quit)
-        button.grid(column=2, row=6)
+        button = tk.Button(self, text="Close", command=app.quit)
+        button.grid(column=2, row=7, pady=20)
 
     def valider(self):
         newsletter = Newsletter()
         newsletter.initialise_email_sender(self.champs['username'].get(), self.champs['password'].get(), smtp_email_adress=self.champs['sender_email'].get())
+        print(self.champs["recipient"].get())
         newsletter.add_receiver(self.champs["recipient"].get())
         newsletter.set_subject(self.champs["subject"].get())
         newsletter.set_images(self.filename)
